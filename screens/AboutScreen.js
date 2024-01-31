@@ -1,20 +1,27 @@
-import { View, Text, StyleSheet, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useLayoutEffect } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
 
-export default function AboutScreen({ route, navigation }) {
+export default function AboutScreen({ navigation, route }) {
   const { name } = route.params;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: name,
+    });
+  }, [navigation, name]);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>About {name}</Text>
       <Button
         title="Update the name"
-        onPress={() =>
-          navigation.setParams({
-            name: "Czar",
-          })
-        }
+        onPress={() => navigation.setParams({ name: "Codevolution" })}
       />
-      <Button title="Go back with data" onPress={navigation.navigate("Home", { result: "Data From About"})}/>
+      <Button
+        title="Go back with data"
+        onPress={() => {
+          navigation.navigate("Home", { result: "Data from About" });
+        }}
+      />
     </View>
   );
 }
